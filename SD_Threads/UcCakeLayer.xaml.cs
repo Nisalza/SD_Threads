@@ -53,6 +53,7 @@ namespace SD_Threads
 
         private void btnLayer_Click(object sender, RoutedEventArgs e)
         {
+            ApplicationData.Income -= Current.PurchaseCost;
             ((StackPanel)Parent).Children.Remove(this);
         }
     }

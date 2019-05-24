@@ -27,6 +27,7 @@ namespace SD_Threads
         {
             InitializeComponent();
             LoadData();
+            ApplicationData.ValueChanged += ChangeIncomeValue;
         }
 
         private void LoadData()
@@ -59,13 +60,14 @@ namespace SD_Threads
 
         private void CreateCakeLayer(CakeLayer layer)
         {
-            if (Board.Children.Count < 8)
+            if (Board.Children.Count < 7)
             {
                 UcCakeLayer cakeLayer = new UcCakeLayer { Current = layer };
                 Board.Children.Add(cakeLayer);
             }
         }
 
+        //todo переименовать кнопки
         private void btnBiscuitLayer_Click(object sender, RoutedEventArgs e)
         {
             CreateCakeLayer(ApplicationData.CakeDough[0]);
@@ -139,6 +141,21 @@ namespace SD_Threads
         private void Button_Click_13(object sender, RoutedEventArgs e)
         {
             CreateCakeLayer(ApplicationData.CakeToppings[4]);
+        }
+
+        private void Button_Click_14(object sender, RoutedEventArgs e)
+        {
+            foreach (UcCakeLayer c in Board.Children)
+            {
+                ApplicationData.Income -= c.Current.PurchaseCost;
+            }
+            
+            Board.Children.Clear();
+        }
+
+        private void ChangeIncomeValue(object sender, EventArgs e)
+        {
+            tbIncome.Text = ApplicationData.Income.ToString();
         }
     }
 }
