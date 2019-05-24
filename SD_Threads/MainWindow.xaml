@@ -1,12 +1,82 @@
-﻿<Window x:Class="SD_Threads.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SD_Threads"
+        xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" x:Class="SD_Threads.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Кондитерская" Height="450" Width="800" FontSize="14" MinWidth="800" MinHeight="450">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205*" MaxWidth="400" MinWidth="205"/>
+            <ColumnDefinition Width="294*"/>
+            <ColumnDefinition Width="293*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="OrdersTable" Margin="10,30,10,10" Background="#FFF7F7F7"/>
+        <Grid x:Name="Materials" Grid.Column="1" Margin="10,0,10,10" Height="149" VerticalAlignment="Bottom" Background="#FFF7F7F7" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Grid ToolTip="Коржи">
+                    <Button x:Name="BiscuitLayer" Content="Бисквитный корж" VerticalAlignment="Top" Margin="10,6,10,0" Background="#FFFFF7E0" Click="btnBiscuitLayer_Click"/>
+                    <Button Content="Шоколадный корж" VerticalAlignment="Top" Margin="10,34,10,0" Background="#FF493808" Foreground="White" Click="Button_Click"/>
+                    <Button Content="Миндальный корж" VerticalAlignment="Top" Margin="10,62,10,0" Background="#FFFFBE60" Click="Button_Click_1"/>
+                    <Button Content="Песочный корж" VerticalAlignment="Top" Margin="10,90,10,0" Background="#FFFFE2AE" Click="Button_Click_2"/>
+                    <Button Content="Слоёный корж" VerticalAlignment="Top" Margin="10,118,10,0" Background="#FFFCFFBD" Click="Button_Click_3"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="-1,0" ToolTip="Крем">
+                <Grid>
+                    <Button Content="Сливочный крем" Margin="10,7,10,0" VerticalAlignment="Top" Background="#FFFFFB9F" Click="Button_Click_4"/>
+                    <Button Content="Крем со сгущёнкой" Margin="10,35,10,0" VerticalAlignment="Top" Background="#FFA04900" Foreground="White" Click="Button_Click_5"/>
+                    <Button Content="Клубничный крем" Margin="10,63,10,0" VerticalAlignment="Top" Background="#FFFF5454" Click="Button_Click_6"/>
+                    <Button Content="Шоколадный крем" Margin="10,91,10,0" VerticalAlignment="Top" Background="#FF493808" Foreground="White" Click="Button_Click_7"/>
+                    <Button Content="Лимонный крем" Margin="10,119,10,0" VerticalAlignment="Top" Background="#FFFFDF13" Click="Button_Click_8"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" ToolTip="Топпинги">
+                <Grid>
+                    <Button Content="Фрукты" Margin="10,7,8,0" VerticalAlignment="Top" Background="#FFA8FF6C" Click="Button_Click_9"/>
+                    <Button Content="Сахарная пудра" Margin="10,35,8,0" VerticalAlignment="Top" Background="White" Click="Button_Click_10"/>
+                    <Button Content="Кондитерская присыпка" Margin="10,63,8,0" VerticalAlignment="Top" Background="#FFFFB3F5" Click="Button_Click_11"/>
+                    <Button Content="Кокосовая стружка" Margin="10,91,8,0" VerticalAlignment="Top" Background="#FFF5E6D9" Click="Button_Click_12"/>
+                    <Button Content="Лесные ягоды" Margin="10,119,8,0" VerticalAlignment="Top" Background="#FFAC6DB9" Click="Button_Click_13"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Label Content="Кондитерский стол" Margin="68,4,68,0" VerticalAlignment="Top" Height="26" Grid.Column="1" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="10,30,10,192">
+            <StackPanel x:Name="Board" Margin="10,5" RenderTransformOrigin="0.5,0.5">
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="180"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+            </StackPanel>
+        </Border>
+        <Label Content="Статистика" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Center" Grid.Column="2"/>
+        <StackPanel Height="26" Margin="10,4,10,0" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="Доска заказов (" Margin="0" HorizontalAlignment="Left" Padding="5,5,0,5"/>
+            <Label Content="0" HorizontalAlignment="Right" Height="29" Margin="0" Padding="0,5"/>
+            <Label Content=")" HorizontalAlignment="Right" Margin="0" Padding="0,5,5,5"/>
+        </StackPanel>
+        <Button Content="Отменить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,164" VerticalAlignment="Bottom" Width="95"/>
+        <Button Content="Завершить" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,164" VerticalAlignment="Bottom" Width="95"/>
+        <Label Content="Доход:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
+        <Label Content="Обслуженных клиентов:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+        <Label Content="Недовольных клиентов:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="2" Margin="191,35,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextAlignment="Center"/>
+        <TextBlock Grid.Column="2" Margin="191,69,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextAlignment="Center"/>
+        <TextBlock Grid.Column="2" Margin="191,103,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center"><Run Text="0"/></TextBlock>
+        <Label Content="Рейтинг:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="2" Margin="191,137,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center"><Run Text="0"/></TextBlock>
+
     </Grid>
 </Window>
