@@ -29,18 +29,62 @@ namespace SD_Threads.Classes
                 if (_income != value)
                 {
                     _income = value;
-                    if (ValueChanged == null) return;
-                    ValueChanged(Income, EventArgs.Empty);
+                    if (IncomeValueChanged == null) return;
+                    IncomeValueChanged(Income, EventArgs.Empty);
                 }
             }
         }
 
-        public static event EventHandler ValueChanged;
+        public static event EventHandler IncomeValueChanged;
 
-        public static ushort HappyClients { get; set; }
+        private static ushort _happyClients;
 
-        public static ushort WorryClients { get; set; }
+        public static ushort HappyClients
+        {
+            get => _happyClients;
+            set
+            {
+                if (_happyClients != value)
+                {
+                    _happyClients = value;
+                    if (RatingValueChanged == null) return;
+                    RatingValueChanged(HappyClients, EventArgs.Empty);
+                }
+            }
+        }
 
-        public static byte Rating { get; set; }
+        private static ushort _worryClients;
+
+        public static ushort WorryClients
+        {
+            get => _worryClients;
+            set
+            {
+                if (_worryClients != value)
+                {
+                    _worryClients = value;
+                    if (RatingValueChanged == null) return;
+                    RatingValueChanged(WorryClients, EventArgs.Empty);
+                }
+            }
+        }
+
+        private static int _sumRating;
+
+        public static int SumRating
+        {
+            get => _sumRating;
+            set
+            {
+                if (_sumRating != value)
+                {
+                    _sumRating = value;
+                    if (RatingValueChanged == null) return;
+                    RatingValueChanged(SumRating, EventArgs.Empty);
+                }
+            }
+        }
+
+        public static event EventHandler RatingValueChanged;
     }
 }

@@ -122,5 +122,8 @@
   <ItemGroup>
     <Resource Include="Img\cancel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\success.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

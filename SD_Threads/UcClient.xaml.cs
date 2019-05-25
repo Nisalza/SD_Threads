@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,9 +25,12 @@ namespace SD_Threads
     {
         public Cake Current;
 
+        public int Mood;
+
         public UcClient()
         {
             InitializeComponent();
+            Mood = 10;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -74,10 +79,29 @@ namespace SD_Threads
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnDeleteClient_Click(object sender, RoutedEventArgs e)
         {
-            ++ApplicationData.WorryClients;
-            ((StackPanel)Parent).Children.Remove(this);
+            DeleteClient();
+        }
+
+        public void DecClientMood(int threadId)
+        {
+            --Mood;
+            tbClientMood.Text = Mood.ToString();
+            if (Mood <= 0)
+            {
+                DeleteClient();
+            }
+        }
+
+        private void DeleteClient()
+        {
+            if (Parent != null)
+            {
+                ApplicationData.SumRating += Mood;
+                ++ApplicationData.WorryClients;
+                ((StackPanel)Parent)?.Children.Remove(this);
+            }
         }
     }
 }

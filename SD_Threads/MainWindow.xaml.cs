@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -26,37 +29,88 @@ namespace SD_Threads
     public partial class MainWindow : Window
     {
         private readonly BackgroundWorker _bw;
-        private SynchronizationContext _sc;
+        private readonly SynchronizationContext _sc;
+        private int _ordersCount = 0;
+        private object _obj;
 
         public MainWindow()
         {
             InitializeComponent();
             LoadData();
-            ApplicationData.ValueChanged += ChangeIncomeValue;
+            ApplicationData.IncomeValueChanged += ChangeIncomeIncomeValue;
+            ApplicationData.RatingValueChanged += ChangeRatingValue;
+            _obj = new object();
             _sc = SynchronizationContext.Current;
             _bw = new BackgroundWorker();
             _bw.RunWorkerAsync();
             _bw.DoWork += TestOrdersCount;
+            Thread thread = new Thread(StartClientsQueue) { Priority = ThreadPriority.Lowest, IsBackground = true };
+            thread.Start();
+        }
+
+        private void StartClientsQueue()
+        {
+            int i = 0;
+            while (true)
+            {
+                if (_ordersCount < 5)
+                {
+                    if (ApplicationData.Rnd.Next(2) == 1)
+                    {
+                        ++i;
+                        ThreadPool.QueueUserWorkItem(CreateClient, i);
+                    }
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void CreateClient(object state)
+        {
+            UcClient current = null;
+            _sc.Send(async x => { current = await AddClient((int)state); }, null);
+            while (current.Mood > 0)
+            {
+                Thread.Sleep(1000 * ApplicationData.Rnd.Next(1, 8));
+                lock (_obj)
+                {
+                    _sc.Post(x => { current?.DecClientMood((int)state); }, null);
+                }
+            }
+            Thread.CurrentThread.Abort();
+        }
+
+        private async Task<UcClient> AddClient(int threadId)
+        {
+            UcClient client = new UcClient
+            {
+                Current = new Cake().CreateCake(),
+                tbOrderId = {Text = threadId.ToString()}
+            };
+
+            OrdersTable.Children.Add(client);
+
+            return client;
         }
 
         private void TestOrdersCount(object sender, DoWorkEventArgs e)
         {
             while (true)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(250);
                 if (_bw.CancellationPending)
                 {
                     e.Cancel = true;
                     return;
                 }
 
-                _sc.Post((a) => { tbOrdersCount.Text = OrdersTable.Children.Count.ToString(); }, null);
+                _sc.Post(x => { UpdateOrdersCount(); }, null);
             }
         }
 
         private void LoadData()
         {
-            List<CakeLayer> cakeLayers = new List<CakeLayer>();
+            List<CakeLayer> cakeLayers;
             XmlSerializer xml = new XmlSerializer(typeof(List<CakeLayer>));
             using (TextReader reader = new StreamReader("CakeLayers.xml"))
             {
@@ -80,27 +134,6 @@ namespace SD_Threads
                         break;
                 }
             }
-
-            Thread.Sleep(5000);
-            AddClient();
-            Thread.Sleep(2000);
-            AddClient();
-            Thread.Sleep(2000);
-            AddClient();
-            Thread.Sleep(2000);
-            AddClient();
-            Thread.Sleep(2000);
-            AddClient();
-        }
-
-        private void AddClient()
-        {
-            UcClient client = new UcClient
-            {
-                Current = new Cake().CreateCake()
-            };
-
-            OrdersTable.Children.Add(client);
         }
 
         #region Кнопки
@@ -202,14 +235,55 @@ namespace SD_Threads
             Board.Children.Clear();
         }
 
-        private void ChangeIncomeValue(object sender, EventArgs e)
+        private void ChangeIncomeIncomeValue(object sender, EventArgs e)
         {
             tbIncome.Text = ApplicationData.Income.ToString();
         }
 
+        private void ChangeRatingValue(object sender, EventArgs e)
+        {
+            double rating = (double)ApplicationData.SumRating / (double)(ApplicationData.WorryClients + ApplicationData.HappyClients);
+            tbRating.Text = $"{rating:0.#}";
+            tbHappyClients.Text = ApplicationData.HappyClients.ToString();
+            tbWorryClients.Text = ApplicationData.WorryClients.ToString();
+        }
+
         public void UpdateOrdersCount()
         {
-            tbOrdersCount.Text = OrdersTable.Children.Count.ToString();
+            _ordersCount = OrdersTable.Children.Count;
+            tbOrdersCount.Text = _ordersCount.ToString();
+        }
+
+        private void btnComplete_Click(object sender, RoutedEventArgs e)
+        {
+            Cake cake = new Cake {CakeLayers = new CakeLayer[Board.Children.Count]};
+            for (int i = 0; i < Board.Children.Count; ++i)
+            {
+                cake.CakeLayers[i] = ((UcCakeLayer) Board.Children[i]).Current;
+            }
+
+            UcClient client = null;
+            foreach (UcClient c in OrdersTable.Children)
+            {
+                if (c.Current == cake)
+                {
+                    client = c;
+                    break;
+                }
+            }
+            if (client != null)
+            {
+                ++ApplicationData.HappyClients;
+                ApplicationData.SumRating += client.Mood;
+                ApplicationData.Income += client.Current.CakeCost;
+                OrdersTable.Children.Remove(client);
+                Board.Children.Clear();
+                bStatus.Background = Brushes.Chartreuse;
+            }
+            else
+            {
+                bStatus.Background = Brushes.Red;
+            }
         }
     }
 }

@@ -85,5 +85,47 @@ namespace SD_Threads.Classes
 
             return this;
         }
+
+        public static bool operator ==(Cake cake1, Cake cake2)
+        {
+            CakeLayer layer1 = null, layer2 = null;
+            int? len = 0;
+            if ((len = cake1?.CakeLayers.Length) == cake2?.CakeLayers.Length)
+            {
+                for (int i = 0; i < len; ++i)
+                {
+                    layer1 = cake1.CakeLayers[i];
+                    layer2 = cake2.CakeLayers[i];
+                    if (layer1.LayerName != layer2.LayerName || layer1.CakeLayerType != layer2.CakeLayerType)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            return false;
+        }
+
+        public static bool operator !=(Cake cake1, Cake cake2)
+        {
+            CakeLayer layer1 = null, layer2 = null;
+            int? len = 0;
+            if ((len = cake1?.CakeLayers.Length) == cake2?.CakeLayers.Length)
+            {
+                for (int i = 0; i < len; ++i)
+                {
+                    layer1 = cake1.CakeLayers[i];
+                    layer2 = cake2.CakeLayers[i];
+                    if (layer1.LayerName != layer2.LayerName || layer1.CakeLayerType != layer2.CakeLayerType)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            return true;
+        }
     }
 }
