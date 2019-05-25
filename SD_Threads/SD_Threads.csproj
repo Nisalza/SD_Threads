@@ -66,6 +66,9 @@
     <Compile Include="UcCakeLayer.xaml.cs">
       <DependentUpon>UcCakeLayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UcClient.xaml.cs">
+      <DependentUpon>UcClient.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,6 +85,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UcCakeLayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UcClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\cancel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

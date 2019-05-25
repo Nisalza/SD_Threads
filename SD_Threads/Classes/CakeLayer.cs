@@ -30,6 +30,8 @@ namespace SD_Threads.Classes
 
         public string LayerName { get; set; }
 
+        public string LayerNameRu { get; set; }
+
         public byte Red { get; set; }
 
         public byte Green { get; set; }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,11 +25,33 @@ namespace SD_Threads
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly BackgroundWorker _bw;
+        private SynchronizationContext _sc;
+
         public MainWindow()
         {
             InitializeComponent();
             LoadData();
             ApplicationData.ValueChanged += ChangeIncomeValue;
+            _sc = SynchronizationContext.Current;
+            _bw = new BackgroundWorker();
+            _bw.RunWorkerAsync();
+            _bw.DoWork += TestOrdersCount;
+        }
+
+        private void TestOrdersCount(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                Thread.Sleep(500);
+                if (_bw.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                _sc.Post((a) => { tbOrdersCount.Text = OrdersTable.Children.Count.ToString(); }, null);
+            }
         }
 
         private void LoadData()
@@ -56,7 +80,30 @@ namespace SD_Threads
                         break;
                 }
             }
+
+            Thread.Sleep(5000);
+            AddClient();
+            Thread.Sleep(2000);
+            AddClient();
+            Thread.Sleep(2000);
+            AddClient();
+            Thread.Sleep(2000);
+            AddClient();
+            Thread.Sleep(2000);
+            AddClient();
         }
+
+        private void AddClient()
+        {
+            UcClient client = new UcClient
+            {
+                Current = new Cake().CreateCake()
+            };
+
+            OrdersTable.Children.Add(client);
+        }
+
+        #region Кнопки
 
         private void CreateCakeLayer(CakeLayer layer)
         {
@@ -143,7 +190,9 @@ namespace SD_Threads
             CreateCakeLayer(ApplicationData.CakeToppings[4]);
         }
 
-        private void Button_Click_14(object sender, RoutedEventArgs e)
+        #endregion
+        
+        private void btnDeleteCake_Click(object sender, RoutedEventArgs e)
         {
             foreach (UcCakeLayer c in Board.Children)
             {
@@ -156,6 +205,11 @@ namespace SD_Threads
         private void ChangeIncomeValue(object sender, EventArgs e)
         {
             tbIncome.Text = ApplicationData.Income.ToString();
+        }
+
+        public void UpdateOrdersCount()
+        {
+            tbOrdersCount.Text = OrdersTable.Children.Count.ToString();
         }
     }
 }

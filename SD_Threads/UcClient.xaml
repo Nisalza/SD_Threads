@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="SD_Threads.UcClient"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SD_Threads"
+             mc:Ignorable="d" FontSize="14" Loaded="UserControl_Loaded" Margin="0,0,0,1" MinWidth="200" MinHeight="130" MaxWidth="350">
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Номер заказа" VerticalAlignment="Top" Margin="4,0,5,0" Padding="1" Height="21"/>
+            <TextBlock x:Name="tbOrderId" Margin="5,1,24,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" Height="19"/>
+            <Label Content="Настроение" Margin="4,42,18,0" VerticalAlignment="Top" Padding="1" Height="21"/>
+            <StackPanel Margin="5,43,4,0" VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="1" Height="19">
+                <TextBlock x:Name="tbClientMood" TextWrapping="Wrap" Text="10"/>
+                <TextBlock TextWrapping="Wrap" Text="/10"/>
+            </StackPanel>
+            <Label Content="Стоимость" Margin="4,21,18,0" VerticalAlignment="Top" Padding="1" Height="21"/>
+            <TextBlock x:Name="tbCakeCost" Margin="5,22,4,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" Height="19"/>
+            <Label Content="Коржи" Margin="4,63,18,0" VerticalAlignment="Top" Padding="1" Height="21"/>
+            <Label Content="Крем" Margin="4,84,18,0" VerticalAlignment="Top" Padding="1" Height="21"/>
+            <Label Content="Топпинг" Margin="4,105,18,0" VerticalAlignment="Top" Padding="1" Height="21"/>
+            <Grid x:Name="gDough" Grid.Column="1" Height="15" Margin="5,66,4,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="bDoughColor" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="15"/>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0" Orientation="Horizontal">
+                    <TextBlock x:Name="tbDoughName" TextWrapping="Wrap" Text="T" FontSize="12" HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text=" (x" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="tbDoughCount" TextWrapping="Wrap" Text="0" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text=")" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="gCream" Grid.Column="1" Height="15" Margin="5,87,4,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="bCreamColor" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="15"/>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0" Orientation="Horizontal">
+                    <TextBlock x:Name="tbCreamName" TextWrapping="Wrap" Text="T" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text=" (x" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="tbCreamCount" TextWrapping="Wrap" Text="0" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text=")" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="gTopping" Grid.Column="1" Height="15" Margin="5,108,4,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="bToppingColor" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="15"/>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0" Orientation="Horizontal">
+                    <TextBlock x:Name="tbToppingName" TextWrapping="Wrap" Text="T" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text=" (x" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="tbToppingCount" TextWrapping="Wrap" Text="0" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text=")" FontSize="12" Height="15" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+            <Button Content="" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="23" ToolTip="Отменить заказ" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="Img/cancel.png"/>
+                </Button.Background>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>

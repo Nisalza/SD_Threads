@@ -9,11 +9,10 @@
         Title="Кондитерская" Height="450" Width="800" FontSize="14" MinWidth="800" MinHeight="450">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="205*" MaxWidth="400" MinWidth="205"/>
-            <ColumnDefinition Width="294*"/>
+            <ColumnDefinition Width="250*" MaxWidth="400" MinWidth="250"/>
+            <ColumnDefinition Width="249*"/>
             <ColumnDefinition Width="293*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="OrdersTable" Margin="10,30,10,10" Background="#FFF7F7F7"/>
         <Grid x:Name="Materials" Grid.Column="1" Margin="10,0,10,10" Height="149" VerticalAlignment="Bottom" Background="#FFF7F7F7" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -48,7 +47,7 @@
                 </Grid>
             </Border>
         </Grid>
-        <Label Content="Кондитерский стол" Margin="68,4,68,0" VerticalAlignment="Top" Height="26" Grid.Column="1" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Content="Кондитерский стол" Margin="54,4,61,0" VerticalAlignment="Top" Height="26" Grid.Column="1" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="134"/>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="10,30,10,192">
             <StackPanel x:Name="Board" Margin="10,5" RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
@@ -61,22 +60,25 @@
                 </StackPanel.RenderTransform>
             </StackPanel>
         </Border>
-        <Label Content="Статистика" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Center" Grid.Column="2"/>
-        <StackPanel Height="26" Margin="10,4,10,0" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+        <Label Content="Статистика" Margin="111,4,102,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Center" Grid.Column="2" Width="80"/>
+        <StackPanel Height="26" Margin="60,4,68,0" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center" Width="122">
             <Label Content="Доска заказов (" Margin="0" HorizontalAlignment="Left" Padding="5,5,0,5"/>
-            <Label Content="0" HorizontalAlignment="Right" Height="29" Margin="0" Padding="0,5"/>
+            <TextBlock x:Name="tbOrdersCount" Text="0"  HorizontalAlignment="Right" Height="29" Margin="0" Padding="0,5"/>
             <Label Content=")" HorizontalAlignment="Right" Margin="0" Padding="0,5,5,5"/>
         </StackPanel>
-        <Button Content="Отменить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,164" VerticalAlignment="Bottom" Width="95" Click="Button_Click_14"/>
-        <Button Content="Завершить" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,164" VerticalAlignment="Bottom" Width="95"/>
-        <Label Content="Доход:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
-        <Label Content="Обслуженных клиентов:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
-        <Label Content="Недовольных клиентов:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbIncome" Grid.Column="2" Margin="191,35,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextAlignment="Center"/>
-        <TextBlock x:Name="tbHappyClients" Grid.Column="2" Margin="191,69,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextAlignment="Center"/>
-        <TextBlock x:Name="tbWorryClients" Grid.Column="2" Margin="191,103,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center"><Run Text="0"/></TextBlock>
-        <Label Content="Рейтинг:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbRating" Grid.Column="2" Margin="191,137,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center"><Run Text="0"/></TextBlock>
+        <Button x:Name="btnDeleteCake" Content="Отменить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,164" VerticalAlignment="Bottom" Width="95" Click="btnDeleteCake_Click" Height="23"/>
+        <Button Content="Завершить" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,164" VerticalAlignment="Bottom" Width="95" Height="23"/>
+        <Label Content="Доход:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Height="29" Width="53"/>
+        <Label Content="Обслуженных клиентов:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Height="29" Width="166"/>
+        <Label Content="Недовольных клиентов:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Height="29" Width="164"/>
+        <TextBlock x:Name="tbIncome" Grid.Column="2" Margin="191,35,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextAlignment="Center" Height="19"/>
+        <TextBlock x:Name="tbHappyClients" Grid.Column="2" Margin="191,69,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextAlignment="Center" Height="19"/>
+        <TextBlock x:Name="tbWorryClients" Grid.Column="2" Margin="191,103,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Height="19"><Run Text="0"/></TextBlock>
+        <Label Content="Рейтинг:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Height="29" Width="64"/>
+        <TextBlock x:Name="tbRating" Grid.Column="2" Margin="191,137,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Height="19"><Run Text="0"/></TextBlock>
+        <ScrollViewer Margin="10,30,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <StackPanel x:Name="OrdersTable" Background="#FFF7F7F7"/>
+        </ScrollViewer>
 
     </Grid>
 </Window>

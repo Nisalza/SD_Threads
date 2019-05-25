@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using LiveCharts.Defaults;
 
 namespace SD_Threads.Classes
 {
+    [Synchronization]
     public static class ApplicationData
     {
         public static List<CakeLayer> CakeDough = new List<CakeLayer>();
@@ -34,5 +36,11 @@ namespace SD_Threads.Classes
         }
 
         public static event EventHandler ValueChanged;
+
+        public static ushort HappyClients { get; set; }
+
+        public static ushort WorryClients { get; set; }
+
+        public static byte Rating { get; set; }
     }
 }

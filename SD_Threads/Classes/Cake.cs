@@ -10,12 +10,26 @@ namespace SD_Threads.Classes
     {
         public CakeLayer[] CakeLayers;
 
-        public int CakeCost;
+        private int _cakeCost;
+
+        private int _doughCount;
+
+        private int _creamCount;
+
+        private int _toppingCount;
+
+        public int CakeCost => _cakeCost;
+
+        public int DoughCount => _doughCount;
+
+        public int CreamCount => _creamCount;
+
+        public int ToppingCount => _toppingCount;
 
         public Cake()
         {
             CakeLayers = new CakeLayer[ApplicationData.Rnd.Next(2, 7)];
-            CakeCost = 0;
+            _cakeCost = _doughCount = _creamCount = _toppingCount = 0;
         }
 
         public Cake CreateCake()
@@ -29,7 +43,8 @@ namespace SD_Threads.Classes
                 for (int i = 0; i < CakeLayers.Length; i += 2)
                 {
                     CakeLayers[i] = cakeLayer;
-                    CakeCost += cakeLayer.SaleCost;
+                    _cakeCost += cakeLayer.SaleCost;
+                    ++_doughCount;
                 }
 
                 layer = ApplicationData.Rnd.Next(ApplicationData.CakeCustards.Count);
@@ -37,7 +52,8 @@ namespace SD_Threads.Classes
                 for (int i = 1; i < CakeLayers.Length; i += 2)
                 {
                     CakeLayers[i] = cakeLayer;
-                    CakeCost += cakeLayer.SaleCost;
+                    _cakeCost += cakeLayer.SaleCost;
+                    ++_creamCount;
                 }
             }
             else
@@ -47,7 +63,8 @@ namespace SD_Threads.Classes
                 for (int i = 0; i < CakeLayers.Length - 1; i += 2)
                 {
                     CakeLayers[i] = cakeLayer;
-                    CakeCost += cakeLayer.SaleCost;
+                    _cakeCost += cakeLayer.SaleCost;
+                    ++_doughCount;
                 }
 
                 layer = ApplicationData.Rnd.Next(ApplicationData.CakeCustards.Count);
@@ -55,13 +72,15 @@ namespace SD_Threads.Classes
                 for (int i = 1; i < CakeLayers.Length - 1; i += 2)
                 {
                     CakeLayers[i] = cakeLayer;
-                    CakeCost += cakeLayer.SaleCost;
+                    _cakeCost += cakeLayer.SaleCost;
+                    ++_creamCount;
                 }
 
                 layer = ApplicationData.Rnd.Next(ApplicationData.CakeToppings.Count);
                 cakeLayer = ApplicationData.CakeToppings[layer];
                 CakeLayers[CakeLayers.Length - 1] = cakeLayer;
-                CakeCost += cakeLayer.SaleCost;
+                _cakeCost += cakeLayer.SaleCost;
+                ++_toppingCount;
             }
 
             return this;
