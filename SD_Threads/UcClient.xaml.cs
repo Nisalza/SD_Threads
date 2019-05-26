@@ -81,6 +81,7 @@ namespace SD_Threads
 
         private void btnDeleteClient_Click(object sender, RoutedEventArgs e)
         {
+            Mood = 0;
             DeleteClient();
         }
 

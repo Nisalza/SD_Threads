@@ -112,6 +112,10 @@ namespace SD_Threads
         {
             List<CakeLayer> cakeLayers;
             XmlSerializer xml = new XmlSerializer(typeof(List<CakeLayer>));
+            if (!File.Exists("CakeLayers.xml"))
+            {
+                CreateData();
+            }
             using (TextReader reader = new StreamReader("CakeLayers.xml"))
             {
                 cakeLayers = (List<CakeLayer>)xml.Deserialize(reader);
@@ -133,6 +137,33 @@ namespace SD_Threads
                         ApplicationData.CakeToppings.Add(cl);
                         break;
                 }
+            }
+        }
+
+        private void CreateData()
+        {
+            List<CakeLayer> cakeLayers = new List<CakeLayer>
+            {
+                new CakeLayer(1, "Biscuit", "Бисквит", 255, 247, 224, 70, 90, CakeLayerType.CakeLayer),
+                new CakeLayer(2, "Chocolate", "Шоколад", 73, 56, 8, 50, 100, CakeLayerType.CakeLayer),
+                new CakeLayer(3, "Almond", "Миндаль", 255, 190, 96, 200, 250, CakeLayerType.CakeLayer),
+                new CakeLayer(4, "Crumby", "Песочный", 255, 226, 174, 70, 150, CakeLayerType.CakeLayer),
+                new CakeLayer(5, "Flaky", "Слоёный", 252, 255, 189, 70, 100, CakeLayerType.CakeLayer),
+                new CakeLayer(1, "Creamy", "Сливочный", 255, 251, 159, 100, 150, CakeLayerType.Cream),
+                new CakeLayer(2, "CondensedMilk", "Сгущёнка", 160, 73, 0, 125, 170, CakeLayerType.Cream),
+                new CakeLayer(3, "Strawberry", "Клубника", 255, 84, 84, 170, 200, CakeLayerType.Cream),
+                new CakeLayer(4, "Chocolate", "Шоколад", 73, 56, 8, 40, 80, CakeLayerType.Cream),
+                new CakeLayer(5, "Lemon", "Лимон", 255, 223, 19, 100, 130, CakeLayerType.Cream),
+                new CakeLayer(1, "Fruits", "Фрукты", 168, 255, 108, 30, 50, CakeLayerType.Topping),
+                new CakeLayer(2, "PowderedSugar", "Сахарная пудра", 255, 255, 255, 5, 10, CakeLayerType.Topping),
+                new CakeLayer(3, "Powder", "Присыпка", 255, 179, 245, 6, 10, CakeLayerType.Topping),
+                new CakeLayer(4, "CoconutChips", "Кокос", 245, 230, 217, 8, 15, CakeLayerType.Topping),
+                new CakeLayer(5, "Berries", "Ягоды", 172, 109, 185, 35, 70, CakeLayerType.Topping)
+            };
+            XmlSerializer xml = new XmlSerializer(typeof(List<CakeLayer>));
+            using (TextWriter writer = new StreamWriter("CakeLayers.xml"))
+            {
+                xml.Serialize(writer, cakeLayers);
             }
         }
 

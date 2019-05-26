@@ -14,10 +14,11 @@ namespace SD_Threads.Classes
 
         }
 
-        public CakeLayer(int id, string layerName, byte red, byte green, byte blue, byte purchaseCost, byte saleCost, CakeLayerType cakeLayerType)
+        public CakeLayer(int id, string layerName, string layerNameRu, byte red, byte green, byte blue, byte purchaseCost, byte saleCost, CakeLayerType cakeLayerType)
         {
             Id = id;
             LayerName = layerName;
+            LayerNameRu = layerNameRu;
             Red = red;
             Green = green;
             Blue = blue;
